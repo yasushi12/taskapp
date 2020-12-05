@@ -40,7 +40,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // 入力された値がnilでなければif文のブロック内の処理を実行
         if let searchWord = searchBar.text {
            // カテゴリ検索を実施
-           let sameCategoryCells = realm.objects(Task.self).filter("category == '\(searchWord)' ")
+            let predicate = NSPredicate(format: "category = %@", "\(searchWord)")
+            let sameCategoryCells = realm.objects(Task.self).filter(predicate)
+            
             // もし　searchWord が 空白 の場合、「全てのタスク」を表示
             if searchWord == "" {
                 taskArray = realm.objects(Task.self)
